@@ -1,0 +1,166 @@
+body, html {
+	background: black;
+	height: 100%;
+	margin: 0;
+	font-family: 'Lato', sans-serif;
+}
+
+/* song select container */
+.song-select-container {
+	position: relative;
+    width: 800px;
+    text-align: center;
+    top: 20%;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+.song-button {
+	background-color: black;
+    color: white;
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 10px 24px;
+    margin: 0 5px;
+    font-size: 18px;
+}
+
+.song-button:hover {
+	background-color: white;
+    color: black;
+}
+
+#song-input {
+	display: none;
+}
+
+/* song container*/
+
+.song-container {
+	position: relative;
+    width: 800px;
+    text-align: center;
+    top: 25%;
+    margin: 0 auto;
+}
+
+#song-title-label {
+	color: white;
+	font-size: 18px;
+}
+
+/* start container */
+.start-container {
+	position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    margin: auto;
+    width: 1000px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start-label {
+	color: white;
+	font-size: 28px;
+}
+
+/* frequency container and canvas */
+.freq-container, #freq-canvas {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    margin: auto;
+}
+
+.freq-container {
+	width: 800px;
+    height: 800px;
+}
+
+#freq-canvas {
+	border:1px solid #FFFFFF;
+}
+
+/* waveform container, icon, clones, and icon toggles */
+
+.wave-container {
+	width: 800px;
+	height: 800px;
+	position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    margin: auto;
+}
+
+.icon-container, .icon, .clone-container, .clone {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    margin: auto;
+}
+
+.mask {
+    overflow: hidden;
+    will-change: transform;
+    position: absolute;
+    transform: none;
+    top: 0; left: 0;
+}
+
+.icon-toggle-container {
+	position: relative;
+    width: 800px;
+    text-align: center;
+    top: 75%;
+    margin: 0 auto;
+}
+
+.icon-toggle {
+    background-color: black;
+    color: white;
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 10px 24px;
+    margin: 0 5px;
+    font-size: 14px;
+}
+
+.icon-toggle:hover {
+    background-color: white;
+    color: black;
+}
+
+/* hide visualizers initially */
+
+.wave-container, .freq-container, .icon-container {
+	visibility: hidden;
+}
+
+/* button container and buttons */
+.visualizer-button-container {
+	position: relative;
+    width: 800px;
+    text-align: center;
+    top: 75%;
+    margin: 0 auto;
+}
+
+.visualizer-toggle-button {
+    background-color: black;
+    color: white;
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 10px 24px;
+    margin: 0 5px;
+    font-size: 18px;
+}
+
+.visualizer-toggle-button:hover {
+    background-color: white;
+    color: black;
+}

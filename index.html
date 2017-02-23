@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	
+<head>
+	
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple audio visualizer">
+    <meta name="author" content="JLP">
+    
+	<title>Audio Visualizer</title>
+	
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+	<!-- Linea Iconset by Dario Ferrando, http://linea.io/, ferrando_dario@hotmail.it -->
+	
+</head>
+
+<body>
+	
+	<div class="song-select-container">
+		<button class="song-button" id="song-select-button">Select An Audio File</button>
+		<input id="song-input" type="file" name="song-input" accept="audio/*"/>
+		<button class="song-button" id="song-play-button">Play</button>
+	</div>
+		
+	<div class="song-container">
+		
+		<label id="song-title-label">Current Song: Not Selected</label>
+		
+		<audio id="audio-element"></audio>
+		
+	</div>
+	
+	<div class="start-container">
+		<label id="start-label">Choose a song above to play, then click the buttons below to start visualizing!</label>
+	</div>
+	
+	<div class="freq-container">
+    	 <canvas id="freq-canvas" width="800" height="200">
+    	 </canvas>
+    </div>
+    
+    <div class="wave-container">
+	    <div class="icon-container" id="heart-icon">
+	    	 <object class="icon" data="linea svgs/basic_heart.svg" type="image/svg+xml"></object>
+	    </div>
+	    
+	    <div class="icon-container" id="ghettoblaster-icon">
+	    	 <object class="icon" data="linea svgs/music_radio_ghettoblaster.svg" type="image/svg+xml"></object>
+	    </div>
+	    
+	    <div class="icon-container" id="moon-icon">
+	    	 <object class="icon" data="linea svgs/weather_moon.svg" type="image/svg+xml"></object>
+	    </div>
+	    
+	    <div class="icon-container" id="star-icon">
+	    	 <object class="icon" data="linea svgs/weather_star.svg" type="image/svg+xml"></object>
+	    </div>
+	    
+	    <div class="icon-container" id="note-icon">
+	    	 <object class="icon" data="linea svgs/music_note_single.svg" type="image/svg+xml"></object>
+	    </div>
+	    
+	    <div class="icon-container" id="rain-icon">
+	    	 <object class="icon" data="linea svgs/weather_mistyrain.svg" type="image/svg+xml"></object>
+	    </div>
+	    
+	    <div class="icon-toggle-container">
+		    <button class="icon-toggle" id="heart-button">Heart</button>
+		    <button class="icon-toggle" id="ghettoblaster-button">Boom Box</button>
+		    <button class="icon-toggle" id="moon-button">Moon</button>
+		    <button class="icon-toggle" id="star-button">Star</button>
+		    <button class="icon-toggle" id="note-button">Music Note</button>
+		    <button class="icon-toggle" id="rain-button">Raincloud</button>
+	    </div>
+	</div>
+    
+    <div class="visualizer-button-container">
+    	<button class="visualizer-toggle-button" id="freq-button">Frequency Visualizer</button>
+    	<button class="visualizer-toggle-button" id="icon-button">Waveform Visualizer</button>
+    </div>
+    
+</body>
+
+<script src="js/index.js"></script>
+
+</html>

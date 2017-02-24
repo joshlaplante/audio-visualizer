@@ -1,6 +1,8 @@
 ## Audio Visualizer
 Utilizes the File and Web Audio APIs to play and visualize local audio files by extracting frequency and waveform data. 
 
+Supported Browsers: Chrome, Opera
+
 Try it out [here](https://joshlaplante.github.io/audio-visualizer/)!
 ***
 #### Usage

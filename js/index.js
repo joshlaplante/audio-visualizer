@@ -20,8 +20,9 @@ songInput.onchange = function() {
 	/* grab file extension and set it to lower case */
 	var songFileExt = files[0].type.toLowerCase();
 	/* setup regular expression to check if it is correct extension */
-	var regEx = new RegExp("(.*?)\.(mp3|ogg|wav|mp4|m4a|webm)$");
+	var regEx = new RegExp("(.*?)\.(mp3|mpeg|ogg|wav|mp4|m4a|webm)$");
 	/* if it is, upload the file */
+	console.log(songFileExt)
 	if (regEx.test(songFileExt)){
 	    var file = URL.createObjectURL(files[0]); 
 	    /* set empty audio element source to selected file */
@@ -55,42 +56,52 @@ songPlayButton.addEventListener('click', function(event) {
 /* create a variable to assign AudioContext */
 var audioContext;
 
-/* try instantiating a new AudioContext, throw an error if it fails */
-try {
-    /* setup an AudioContext, default to the non-prefixed version if possible */
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-} catch(e) {
-    throw new Error('The Web Audio API is unavailable');
+/* setup function that will create AudioContext triggered on song selection */
+function createAudioContext(){
+	/* try instantiating a new AudioContext, throw an error if it fails */
+	try {
+    	/* setup an AudioContext, default to the non-prefixed version if possible */
+    	audioContext = new (window.AudioContext || window.webkitAudioContext)();
+	} catch(e) {
+    	throw new Error('The Web Audio API is unavailable');
+	}
+
+	/* setup Media Element Source Node from audio element */
+	var source = audioContext.createMediaElementSource(audioElement);
+
+	/* setup a frequency analyzer node for the AudioContext */
+	window.freqAnalyzer = audioContext.createAnalyser();
+	/* set the FFT size (default is 2048) */
+	freqAnalyzer.fftSize = 256;
+	/* set the buffer length (default is half of the FFT) */
+	window.freqBufferLength = freqAnalyzer.frequencyBinCount;
+	/* set up an 8 bit unsigned integeter array */
+	window.freqDataArray = new Uint8Array(freqBufferLength);
+	/* wire the analyzer into the AudioContext*/
+	freqAnalyzer.connect(audioContext.destination);
+
+	/* setup a waveform analyzer node for the AudioContext */
+	window.waveAnalyzer = audioContext.createAnalyser();
+	/* set the FFT size (default is 2048) */
+	waveAnalyzer.fftSize = 2048;
+	/* set the buffer length (default is half of the FFT) */
+	window.waveBufferLength = waveAnalyzer.frequencyBinCount;
+	/* set up an 8 bit unsigned integeter array */
+	window.waveDataArray = new Uint8Array(waveBufferLength);
+	/* wire the analyzer into the AudioContext*/
+	waveAnalyzer.connect(audioContext.destination);
+
+	/* wire the Media Source Element Node into both analyzer nodes */
+	source.connect(freqAnalyzer);
+	source.connect(waveAnalyzer);
 }
 
-/* setup Media Element Source Node from audio element */
-var source = audioContext.createMediaElementSource(audioElement);
+/* wait for user to click on song selection button before instantiating Audio Context */
+songInput.addEventListener("click", (e) => {
+		createAudioContext();
+		waveSetup();
+});
 
-/* setup a frequency analyzer node for the AudioContext */
-var freqAnalyzer = audioContext.createAnalyser();
-/* set the FFT size (default is 2048) */
-freqAnalyzer.fftSize = 256;
-/* set the buffer length (default is half of the FFT) */
-var freqBufferLength = freqAnalyzer.frequencyBinCount;
-/* set up an 8 bit unsigned integeter array */
-var freqDataArray = new Uint8Array(freqBufferLength);
-/* wire the analyzer into the AudioContext*/
-freqAnalyzer.connect(audioContext.destination);
-
-/* setup a waveform analyzer node for the AudioContext */
-var waveAnalyzer = audioContext.createAnalyser();
-/* set the FFT size (default is 2048) */
-waveAnalyzer.fftSize = 2048;
-/* set the buffer length (default is half of the FFT) */
-var waveBufferLength = waveAnalyzer.frequencyBinCount;
-/* set up an 8 bit unsigned integeter array */
-var waveDataArray = new Uint8Array(waveBufferLength);
-/* wire the analyzer into the AudioContext*/
-waveAnalyzer.connect(audioContext.destination);
-
-/* wire the Media Source Element Node into both analyzer nodes */
-source.connect(freqAnalyzer);
-source.connect(waveAnalyzer);
 
 /* END AUDIO COMPONENT */
 
@@ -135,20 +146,28 @@ function drawFreq() {
     };
 }
 
-/* call function to start drawing frequency visualizer bars */
-drawFreq();
+/* wait for user to click on song play button */
+songPlayButton.addEventListener("click", (e) => {
+	/* call function to start drawing frequency visualizer bars */
+	drawFreq();
+});
+
+
 
 /* setup WAVEFORM VISUALIZER next */
 
-/* setup some constant variables, numOfSlices can be increased 
- * to smooth out visualizer, but it increases latency */
-var numOfSlices = 200;
-/* setup step constant to partition waveform data into our slices */
-var step = Math.floor(waveDataArray.length / numOfSlices);
-/* anytime the analyser receives no data, all values in the array will be 128 */
-var noSignal = 128;
-/* create empty array to store slice data */
-var slices = [];
+/* setup function to create variables after AudioContext is created */
+function waveSetup(){
+	/* numOfSlices can be increased to smooth out visualizer, but it increases latency */
+	window.numOfSlices = 200;
+	/* setup step constant to partition waveform data into our slices */
+	window.step = Math.floor(waveDataArray.length / numOfSlices);
+	/* anytime the analyser receives no data, all values in the array will be 128 */
+	window.noSignal = 128;
+	/* create empty array to store slice data */
+	window.slices = [];
+}
+
 
 /* setup function to clone an icon */
 function iconClone(iconID){
